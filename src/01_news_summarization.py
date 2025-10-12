@@ -1,13 +1,18 @@
 import pandas as pd
 import os
+import torch
 from transformers import PegasusTokenizer, PegasusForConditionalGeneration
+
+# Configurar dispositivo (GPU si está disponible)
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"Using device: {device}")
 
 # Cargar el modelo preentrenado de Hugging Face
 model_name = "human-centered-summarization/financial-summarization-pegasus"
 # model_name = "google/pegasus-large"     # más fiel al texto original
 # model_name = "google/pegasus-xsum"      # más conciso, estilo noticioso
 tokenizer = PegasusTokenizer.from_pretrained(model_name)
-model = PegasusForConditionalGeneration.from_pretrained(model_name)
+model = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROCESSED_DIR = os.path.join(ROOT_DIR, 'data', 'news', 'processed')
@@ -33,13 +38,18 @@ for filename in parquet_files:
     for idx, row in df.iterrows():
         text_to_summarize = row["clean_body"]
         
-        # Tokenize our text
-        input_ids = tokenizer(text_to_summarize, return_tensors="pt").input_ids
+        # Tokenize our text with truncation to avoid sequence length errors
+        input_ids = tokenizer(
+            text_to_summarize, 
+            max_length=512, 
+            truncation=True, 
+            return_tensors="pt"
+        ).input_ids.to(device)
         
         # Generate the output
         output = model.generate(
             input_ids,
-            max_length=256,       
+            max_length=512,       
             min_length=80,        
             num_beams=5,          
             early_stopping=True
