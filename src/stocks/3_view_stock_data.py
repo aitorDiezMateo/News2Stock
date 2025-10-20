@@ -7,13 +7,13 @@ output_dir = 'plots/stock'
 os.makedirs(output_dir, exist_ok=True)
 
 # Load data
-data_google = pd.read_parquet('data_stocks/processed/GOOGL_data_processed.parquet')
-data_amazon = pd.read_parquet('data_stocks/processed/AMZN_data_processed.parquet')
-data_apple = pd.read_parquet('data_stocks/processed/AAPL_data_processed.parquet')
-data_meta = pd.read_parquet('data_stocks/processed/META_data_processed.parquet')
-data_microsoft = pd.read_parquet('data_stocks/processed/MSFT_data_processed.parquet')
-data_nvidia = pd.read_parquet('data_stocks/processed/NVDA_data_processed.parquet')
-data_tesla = pd.read_parquet('data_stocks/processed/TSLA_data_processed.parquet')
+data_google = pd.read_parquet('data/stocks/processed/GOOGL_data_processed.parquet')
+data_amazon = pd.read_parquet('data/stocks/processed/AMZN_data_processed.parquet')
+data_apple = pd.read_parquet('data/stocks/processed/AAPL_data_processed.parquet')
+data_meta = pd.read_parquet('data/stocks/processed/META_data_processed.parquet')
+data_microsoft = pd.read_parquet('data/stocks/processed/MSFT_data_processed.parquet')
+data_nvidia = pd.read_parquet('data/stocks/processed/NVDA_data_processed.parquet')
+data_tesla = pd.read_parquet('data/stocks/processed/TSLA_data_processed.parquet')
 
 # Prepare data for plotting
 stock_data = {
@@ -27,39 +27,42 @@ stock_data = {
 }
 
 
-# Plot all stocks in the same figure
-plt.figure(figsize=(12, 8))
-for ticker, df in stock_data.items():
-    # Try to use 'Close' price, fallback to first numeric column if not present
-    price_col = 'Close' if 'Close' in df.columns else df.select_dtypes('number').columns[0]
-    plt.plot(df.index, df[price_col], label=ticker)
+import math
 
-plt.xlabel('Date')
-plt.ylabel('Price')
-plt.title('Stock Prices Over Time')
-plt.legend()
-plt.tight_layout()
+# Helper to create subplots grid
+def _grid_shape(n):
+    cols = 2
+    rows = math.ceil(n / cols)
+    return rows, cols
 
-# Save the plot
-plt.savefig(os.path.join(output_dir, 'all_stocks.png'))
-plt.close()
+# Plot: each ticker in its own subplot (same figure)
+def plot_subplots(stock_dict, value_col, fig_name, ylabel, title_prefix):
+    n = len(stock_dict)
+    rows, cols = _grid_shape(n)
+    fig, axes = plt.subplots(rows, cols, figsize=(12, 4 * rows), sharex=False)
+    axes = axes.flatten() if hasattr(axes, 'flatten') else [axes]
 
-n = len(stock_data)
-fig, axes = plt.subplots(n, 1, figsize=(12, 3 * n), sharex=True)
+    for ax_idx, (ticker, df) in enumerate(stock_dict.items()):
+        ax = axes[ax_idx]
+        if value_col not in df.columns:
+            ax.text(0.5, 0.5, f'{value_col} not found', ha='center')
+        else:
+            ax.plot(df['Date'] if 'Date' in df.columns else df.index, df[value_col])
+        ax.set_title(ticker)
+        ax.set_ylabel(ylabel)
 
-if n == 1:
-    axes = [axes]
+    # Turn off unused axes
+    for j in range(n, len(axes)):
+        fig.delaxes(axes[j])
 
-for ax, (ticker, df) in zip(axes, stock_data.items()):
-    price_col = 'Close'
-    ax.plot(df.index, df[price_col], label=f'{ticker} Price')
-    ax.plot(df.index, df['SMA_30'], label=f'{ticker} SMA_30', linestyle='--')
-    ax.set_title(f'{ticker} Price and 30-Day SMA')
-    ax.set_ylabel('Price')
-    ax.legend()
+    fig.suptitle(f'{title_prefix} (each subplot = one ticker)')
+    fig.tight_layout(rect=[0, 0.03, 1, 0.95])
+    fig_path = os.path.join(output_dir, fig_name)
+    fig.savefig(fig_path)
+    plt.close(fig)
+    print(f"Saved figure: {fig_path}")
 
-axes[-1].set_xlabel('Date')
-plt.tight_layout()
-plt.savefig(os.path.join(output_dir, 'stocks_with_moving_average.png'))
-plt.close()
 
+# Create and save subplot figures for prices and log returns
+plot_subplots(stock_data, 'Close', 'stock_prices_subplots.png', 'Price', 'Stock Prices Over Time')
+plot_subplots(stock_data, 'LOG_RETURN', 'stock_log_returns_subplots.png', 'Log Return', 'Log Returns Over Time')
