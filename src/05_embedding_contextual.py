@@ -13,7 +13,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 print("Loading FinBERT model...")
 tokenizer = AutoTokenizer.from_pretrained("ProsusAI/finbert")
 model = AutoModel.from_pretrained("ProsusAI/finbert")
-model.eval()  # Set to evaluation mode
+model.eval()
 print("FinBERT model loaded.")
 
 # Move model to GPU if available
