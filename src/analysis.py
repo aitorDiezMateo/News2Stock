@@ -13,12 +13,12 @@ summarized_dir = Path(__file__).parent.parent / "data" / "news" / "summarized"
 #     ignore_index=True
 # )
 
-# # Load all summarized news files
-# summarized_files = list(summarized_dir.glob("*.parquet"))
-# df_summarized = pd.concat(
-#     [pd.read_parquet(file) for file in summarized_files],
-#     ignore_index=True
-# )
+# Load all summarized news files
+summarized_files = list(summarized_dir.glob("*.parquet"))
+df_summarized = pd.concat(
+    [pd.read_parquet(file) for file in summarized_files],
+    ignore_index=True
+)
 
 
 # print(f"Loaded {len(df_processed)} rows from processed data")
@@ -26,13 +26,13 @@ summarized_dir = Path(__file__).parent.parent / "data" / "news" / "summarized"
 # print(f"\nProcessed columns: {df_processed.columns.tolist()}")
 # print(f"\nSummarized columns: {df_summarized.columns.tolist()}")
 
-df_summarized = pd.read_parquet(summarized_dir / "amazon_news.parquet")
 
 df_summarized["text"] = df_summarized["title"] + "\n\n" + df_summarized["body_summary"]
 
 
 # Buscar filas donde la palabra 'salvagedata' aparezca 3 veces
 mask = df_summarized['text'].str.count(r'\bsalvagedata\b', flags=re.IGNORECASE) == 3
+print(mask.sum())
 
 # Obtener la primera fila que cumple la condición
 fila = df_summarized[mask].head(1)
