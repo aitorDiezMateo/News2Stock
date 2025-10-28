@@ -172,6 +172,136 @@ def add_temporal_features(df: pd.DataFrame) -> pd.DataFrame:
 	return df
 
 
+def add_stochastic_oscillator(df: pd.DataFrame, k_period: int = 14, d_period: int = 3) -> pd.DataFrame:
+	"""Add Stochastic Oscillator (%K and %D)"""
+	df = df.copy()
+	if not all(col in df.columns for col in ['High', 'Low', 'Close']):
+		return df
+	
+	# %K = 100 * (Close - Low14) / (High14 - Low14)
+	low_min = df['Low'].rolling(window=k_period, min_periods=1).min()
+	high_max = df['High'].rolling(window=k_period, min_periods=1).max()
+	
+	df['STOCH_K'] = 100 * (df['Close'] - low_min) / (high_max - low_min + 1e-10)
+	
+	# %D = 3-period SMA of %K
+	df['STOCH_D'] = df['STOCH_K'].rolling(window=d_period, min_periods=1).mean()
+	
+	return df
+
+
+def add_williams_r(df: pd.DataFrame, period: int = 14) -> pd.DataFrame:
+	"""Add Williams %R indicator"""
+	df = df.copy()
+	if not all(col in df.columns for col in ['High', 'Low', 'Close']):
+		return df
+	
+	# Williams %R = -100 * (Highest High - Close) / (Highest High - Lowest Low)
+	high_max = df['High'].rolling(window=period, min_periods=1).max()
+	low_min = df['Low'].rolling(window=period, min_periods=1).min()
+	
+	df['WILLIAMS_R'] = -100 * (high_max - df['Close']) / (high_max - low_min + 1e-10)
+	
+	return df
+
+
+def add_realized_volatility(df: pd.DataFrame, window: int = 20) -> pd.DataFrame:
+	"""Add Realized Volatility (standard deviation of log returns)"""
+	df = df.copy()
+	if 'LOG_RETURN' not in df.columns:
+		return df
+	
+	df['REALIZED_VOL'] = df['LOG_RETURN'].rolling(window=window, min_periods=1).std()
+	
+	return df
+
+
+def add_parkinson_volatility(df: pd.DataFrame, window: int = 20) -> pd.DataFrame:
+	"""
+	Add Parkinson Volatility estimator
+	Uses High and Low prices: σ = sqrt(1/(4*ln(2)) * mean((ln(H/L))^2))
+	"""
+	df = df.copy()
+	if not all(col in df.columns for col in ['High', 'Low']):
+		return df
+	
+	hl_ratio = np.log(df['High'] / (df['Low'] + 1e-10))
+	hl_ratio_sq = hl_ratio ** 2
+	
+	# Parkinson estimator
+	df['PARKINSON_VOL'] = np.sqrt(
+		(1 / (4 * np.log(2))) * hl_ratio_sq.rolling(window=window, min_periods=1).mean()
+	)
+	
+	return df
+
+
+def add_garman_klass_volatility(df: pd.DataFrame, window: int = 20) -> pd.DataFrame:
+	"""
+	Add Garman-Klass Volatility estimator
+	GK = sqrt(0.5 * (ln(H/L))^2 - (2*ln(2)-1) * (ln(C/O))^2)
+	"""
+	df = df.copy()
+	if not all(col in df.columns for col in ['High', 'Low', 'Close', 'Open']):
+		return df
+	
+	hl_ratio = np.log(df['High'] / (df['Low'] + 1e-10))
+	co_ratio = np.log(df['Close'] / (df['Open'] + 1e-10))
+	
+	gk_component = 0.5 * (hl_ratio ** 2) - (2 * np.log(2) - 1) * (co_ratio ** 2)
+	
+	df['GARMAN_KLASS_VOL'] = np.sqrt(
+		gk_component.rolling(window=window, min_periods=1).mean()
+	)
+	
+	return df
+
+
+def add_rogers_satchell_volatility(df: pd.DataFrame, window: int = 20) -> pd.DataFrame:
+	"""
+	Add Rogers-Satchell Volatility estimator
+	RS = sqrt(mean(ln(H/C) * ln(H/O) + ln(L/C) * ln(L/O)))
+	"""
+	df = df.copy()
+	if not all(col in df.columns for col in ['High', 'Low', 'Close', 'Open']):
+		return df
+	
+	hc = np.log(df['High'] / (df['Close'] + 1e-10))
+	ho = np.log(df['High'] / (df['Open'] + 1e-10))
+	lc = np.log(df['Low'] / (df['Close'] + 1e-10))
+	lo = np.log(df['Low'] / (df['Open'] + 1e-10))
+	
+	rs_component = hc * ho + lc * lo
+	
+	df['ROGERS_SATCHELL_VOL'] = np.sqrt(
+		rs_component.rolling(window=window, min_periods=1).mean()
+	)
+	
+	return df
+
+
+def add_estimated_vwap(df: pd.DataFrame, window: int = 20) -> pd.DataFrame:
+	"""
+	Add estimated VWAP (Volume Weighted Average Price)
+	VWAP = sum(Price * Volume) / sum(Volume)
+	Using typical price: (High + Low + Close) / 3
+	"""
+	df = df.copy()
+	if not all(col in df.columns for col in ['High', 'Low', 'Close', 'Volume']):
+		return df
+	
+	# Typical Price
+	typical_price = (df['High'] + df['Low'] + df['Close']) / 3
+	
+	# VWAP calculation with rolling window
+	df['VWAP'] = (
+		(typical_price * df['Volume']).rolling(window=window, min_periods=1).sum() /
+		df['Volume'].rolling(window=window, min_periods=1).sum()
+	)
+	
+	return df
+
+
 
 
 
@@ -224,6 +354,15 @@ def process_stock(ticker: str) -> pd.DataFrame:
 
 	# Add temporal features (cyclic sin/cos). Do NOT scale variables (user requested no scaling)
 	df = add_temporal_features(df)
+
+	# Add NEW indicators requested by user
+	df = add_stochastic_oscillator(df, k_period=14, d_period=3)
+	df = add_williams_r(df, period=14)
+	df = add_realized_volatility(df, window=20)
+	df = add_parkinson_volatility(df, window=20)
+	df = add_garman_klass_volatility(df, window=20)
+	df = add_rogers_satchell_volatility(df, window=20)
+	df = add_estimated_vwap(df, window=20)
 
 	# Drop rows with NaN (from shifts etc.) and save
 	df = df.dropna().reset_index(drop=True)
