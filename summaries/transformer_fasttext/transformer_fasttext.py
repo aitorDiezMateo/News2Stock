@@ -57,6 +57,8 @@ class MultiHeadAttention(nn.Module):
         scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.d_k)
         
         if mask is not None:
+            while mask.dim() < scores.dim():
+                mask = mask.unsqueeze(-2)
             scores = scores.masked_fill(mask == 0, -1e9)
         
         attention_weights = self.softmax(scores)
@@ -205,12 +207,12 @@ class TransformerSummarizer(nn.Module):
                 nn.init.xavier_uniform_(p)
     
     def create_mask(self, src: torch.Tensor, tgt: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        src_mask = torch.ones(src.size(0), 1, src.size(1), device=src.device)
+        src_mask = torch.ones(1, 1, 1, src.size(1), device=src.device).float()
         
-        tgt_mask = torch.ones(tgt.size(0), 1, tgt.size(1), tgt.size(1), device=tgt.device)
-        tgt_mask = torch.tril(tgt_mask).to(dtype=torch.float)
+        seq_len = tgt.size(1)
+        tgt_mask = torch.tril(torch.ones(seq_len, seq_len, device=tgt.device)).unsqueeze(0).unsqueeze(0)
         
-        return src_mask, tgt_mask
+        return src_mask, tgt_mask.float()
     
     def forward(self, src: torch.Tensor, tgt: torch.Tensor) -> torch.Tensor:
         src_mask, tgt_mask = self.create_mask(src, tgt)
