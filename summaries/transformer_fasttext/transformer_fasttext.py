@@ -533,10 +533,12 @@ if __name__ == "__main__":
     print("GENERATING SUMMARIES FOR APPLE NEWS")
     print("-"*80)
     
-    num_samples = min(5, len(test_data))
-    for i in range(num_samples):
+    from datetime import datetime
+    generated_data = []
+    inference_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    for i in range(len(test_data)):
         src_text = test_data.iloc[i]['clean_body']
-        true_summary = test_data.iloc[i]['body_summary']
         
         words = src_text.lower().split()[:512]
         src_embeddings = []
@@ -559,10 +561,32 @@ if __name__ == "__main__":
         generated_tokens = trainer.generate_summary(src_tensor, max_len=128)
         generated_summary = tokenizer.decode(generated_tokens.cpu().numpy())
         
-        print(f"\n[Sample {i+1}]")
-        print(f"Original Text: {src_text[:150]}...")
-        print(f"True Summary: {true_summary}")
-        print(f"Generated Summary: {generated_summary}")
+        row_dict = {
+            'id': test_data.iloc[i].get('id', i),
+            'author': test_data.iloc[i].get('author', ''),
+            'created': test_data.iloc[i].get('created', ''),
+            'title': test_data.iloc[i].get('title', ''),
+            'teaser': test_data.iloc[i].get('teaser', ''),
+            'clean_body': src_text,
+            'body_summary': test_data.iloc[i]['body_summary'],
+            'generated_summary': generated_summary,
+            'model': 'transformer_fasttext',
+            'inference_date': inference_date
+        }
+        generated_data.append(row_dict)
+        
+        if i < 5:
+            print(f"\n[Sample {i+1}]")
+            print(f"Original Text: {src_text[:150]}...")
+            print(f"True Summary: {test_data.iloc[i]['body_summary']}")
+            print(f"Generated Summary: {generated_summary}")
+    
+    output_df = pd.DataFrame(generated_data)
+    output_path = Path(__file__).parent.parent.parent / "data" / "news" / "inference" / "apple_news_transformer_fasttext.parquet"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_df.to_parquet(output_path)
+    
+    print(f"\n✓ Saved {len(output_df)} generated summaries to {output_path}")
     
     print("\n" + "="*80)
     print("TESTING COMPLETE")
