@@ -357,35 +357,45 @@ class TransformerSummarizerTrainer:
 
 
 class FastTextEmbeddingDataset:
-    def __init__(self, texts: List[str], summaries: List[str], embeddings_dict: Dict, 
-                 tokenizer, max_src_len: int = 512, max_tgt_len: int = 128):
+    def __init__(self, texts: List[str], summaries: List[str], embeddings_source, 
+                 tokenizer, max_src_len: int = 512, max_tgt_len: int = 128, embedding_dim: int = 300):
         self.texts = texts
         self.summaries = summaries
-        self.embeddings_dict = embeddings_dict
+        self.embeddings_source = embeddings_source  # Can be dict-like or FastTextWordEmbeddings
         self.tokenizer = tokenizer
         self.max_src_len = max_src_len
         self.max_tgt_len = max_tgt_len
+        self.embedding_dim = embedding_dim
     
     def __len__(self):
         return len(self.texts)
+    
+    def _get_word_embedding(self, word: str) -> np.ndarray:
+        """Get embedding for a word, returns zero vector if not found"""
+        try:
+            if word in self.embeddings_source:
+                emb = self.embeddings_source[word]
+                if isinstance(emb, np.ndarray):
+                    return emb
+                return np.array(emb)
+        except:
+            pass
+        return np.zeros(self.embedding_dim)
     
     def __getitem__(self, idx):
         text = self.texts[idx]
         summary = self.summaries[idx]
         
         words = text.lower().split()[:self.max_src_len]
-        src_embeddings = []
-        for word in words:
-            if word in self.embeddings_dict:
-                src_embeddings.append(self.embeddings_dict[word])
+        src_embeddings = [self._get_word_embedding(word) for word in words]
         
         if not src_embeddings:
-            src_embeddings = [np.zeros(300)]
+            src_embeddings = [np.zeros(self.embedding_dim)]
         
         src_embeddings = np.array(src_embeddings)
         pad_len = self.max_src_len - len(src_embeddings)
         if pad_len > 0:
-            src_embeddings = np.vstack([src_embeddings, np.zeros((pad_len, 300))])
+            src_embeddings = np.vstack([src_embeddings, np.zeros((pad_len, self.embedding_dim))])
         elif pad_len < 0:
             src_embeddings = src_embeddings[:self.max_src_len]
         
@@ -431,6 +441,25 @@ class SimpleTokenizer:
         return ' '.join([self.idx2word.get(idx, '<UNK>') for idx in tokens if idx > 3])
 
 
+class FastTextWordEmbeddings:
+    """Wrapper to get word embeddings from FastText model"""
+    def __init__(self, model_path: str):
+        import fasttext
+        print(f"Loading FastText model from {model_path}...")
+        self.model = fasttext.load_model(model_path)
+        print(f"FastText model loaded. Dimension: {self.model.get_dimension()}")
+    
+    def __contains__(self, word: str) -> bool:
+        # FastText can generate embeddings for any word (including OOV via subwords)
+        return True
+    
+    def __getitem__(self, word: str) -> np.ndarray:
+        return self.model.get_word_vector(word)
+    
+    def get(self, word: str, default=None) -> np.ndarray:
+        return self.model.get_word_vector(word)
+
+
 if __name__ == "__main__":
     from torch.utils.data import DataLoader
     
@@ -461,27 +490,18 @@ if __name__ == "__main__":
     test_data = test_data[['clean_body', 'body_summary']].dropna()
     print(f"Total test data (Apple): {len(test_data)} articles")
     
-    print("\nLoading FastText embeddings...")
-    embeddings_dir = Path(__file__).parent.parent.parent / "data" / "news" / "embeddings"
+    print("\nLoading FastText model for word embeddings...")
+    fasttext_model_path = Path(__file__).parent.parent.parent / "models" / "cc.en.300.bin"
     
-    embeddings_dict = {}
-    for ticker_file in sorted(embeddings_dir.glob("*_embeddings_no_context.parquet")):
-        ticker = ticker_file.stem.split("_")[0]
-        if ticker.upper() != "APPLE":
-            df = pd.read_parquet(ticker_file)
-            if 'word' in df.columns and 'embedding' in df.columns:
-                for _, row in df.iterrows():
-                    word = row['word']
-                    emb = row['embedding']
-                    if isinstance(emb, (list, np.ndarray)):
-                        embeddings_dict[word] = np.array(emb)
-            print(f"  Loaded embeddings for {ticker}: {len(df)} words")
+    if not fasttext_model_path.exists():
+        raise FileNotFoundError(
+            f"FastText model not found at {fasttext_model_path}. "
+            "Please download cc.en.300.bin from https://fasttext.cc/docs/en/crawl-vectors.html"
+        )
     
-    if not embeddings_dict:
-        print("Warning: No embeddings loaded, will use random vectors")
-        embeddings_dict = {}
-    else:
-        print(f"Total unique words with embeddings: {len(embeddings_dict)}")
+    # Use the FastText model directly for word embeddings
+    embeddings_dict = FastTextWordEmbeddings(str(fasttext_model_path))
+    print("FastText word embeddings ready!")
     
     tokenizer = SimpleTokenizer(vocab_size=10000)
     tokenizer.build_vocab(pd.concat([train_data['clean_body'], train_data['body_summary']]).tolist())
@@ -539,14 +559,21 @@ if __name__ == "__main__":
     generated_data = []
     inference_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
+    def get_word_embedding(word: str, emb_source, dim: int = 300) -> np.ndarray:
+        """Get embedding for a word from the FastText model"""
+        try:
+            if word in emb_source:
+                emb = emb_source[word]
+                return np.array(emb) if not isinstance(emb, np.ndarray) else emb
+        except:
+            pass
+        return np.zeros(dim)
+    
     for i in range(len(test_data)):
         src_text = test_data.iloc[i]['clean_body']
         
         words = src_text.lower().split()[:512]
-        src_embeddings = []
-        for word in words:
-            if word in embeddings_dict:
-                src_embeddings.append(embeddings_dict[word])
+        src_embeddings = [get_word_embedding(word, embeddings_dict) for word in words]
         
         if not src_embeddings:
             src_embeddings = [np.zeros(300)]
