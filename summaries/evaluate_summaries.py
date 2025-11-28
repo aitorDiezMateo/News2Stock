@@ -172,6 +172,8 @@ def analyze_per_sample(inference_dir, output_dir):
     print("="*100)
     
     models = [
+        'transformer',
+        'transformer_fasttext',
         'simple_seq2seq',
         'simple_seq2seq_fasttext',
         'pointer_generator',
@@ -239,10 +241,13 @@ def main(save_per_sample=False):
     
     # Models to evaluate
     models = [
+        "transformer",
+        "transformer_fasttext",
         'simple_seq2seq',
         'simple_seq2seq_fasttext',
         'pointer_generator',
         'pointer_generator_fasttext'
+        
     ]
     
     # Evaluate each model

@@ -131,23 +131,19 @@ with open(data_path, 'rb') as f:
 
 train_sources, train_targets = data_dict['train']
 val_sources, val_targets = data_dict['val']
-test_sources, test_targets = data_dict['test']
 vocab = data_dict['vocab']
 
 print(f"✓ Train: {len(train_sources)} examples")
 print(f"✓ Val: {len(val_sources)} examples")
-print(f"✓ Test: {len(test_sources)} examples")
 print(f"✓ Vocabulary size: {len(vocab)}")
 
 # Create datasets
 train_dataset = SummarizationDataset(train_sources, train_targets, vocab)
 val_dataset = SummarizationDataset(val_sources, val_targets, vocab)
-test_dataset = SummarizationDataset(test_sources, test_targets, vocab)
 
 # Create dataloaders
 train_loader = get_dataloader(train_dataset, config.BATCH_SIZE, shuffle=True)
 val_loader = get_dataloader(val_dataset, config.BATCH_SIZE, shuffle=False)
-test_loader = get_dataloader(test_dataset, config.BATCH_SIZE, shuffle=False)
 
 print(f"\n✓ Created dataloaders (batch_size={config.BATCH_SIZE})")
     
@@ -225,65 +221,51 @@ for epoch in range(config.NUM_EPOCHS):
     print(f"Epoch {epoch+1}/{config.NUM_EPOCHS}")
     print("-" * 40)
 
-# Train
+    # Train
     train_loss = train_epoch(model, train_loader, optimizer, criterion, config.CLIP_GRAD, device)
 
-# Validate
+    # Validate
     val_loss = evaluate(model, val_loader, criterion, device)
 
     end_time = time.time()
     epoch_mins, epoch_secs = epoch_time(start_time, end_time)
 
-# Log results
+    # Log results
     with open(log_file, 'a') as f:
-    f.write(f"{epoch+1},{train_loss:.4f},{val_loss:.4f},{end_time-start_time:.2f}\n")
+        f.write(f"{epoch+1},{train_loss:.4f},{val_loss:.4f},{end_time-start_time:.2f}\n")
 
     print(f"\n  Train Loss: {train_loss:.4f}")
     print(f"  Val Loss: {val_loss:.4f}")
     print(f"  Time: {epoch_mins}m {epoch_secs}s")
 
-# Save checkpoint every 5 epochs
+    # Save checkpoint every 5 epochs
     if (epoch + 1) % 5 == 0:
-    save_checkpoint(model, optimizer, epoch+1, train_loss, val_loss, 
-                  len(vocab), config.CHECKPOINT_DIR)
+        save_checkpoint(model, optimizer, epoch+1, train_loss, val_loss, 
+                        len(vocab), config.CHECKPOINT_DIR)
 
-# Save best model
+    # Save best model
     if val_loss < best_val_loss:
-    best_val_loss = val_loss
-    best_model_path = save_checkpoint(model, optimizer, epoch+1, train_loss, val_loss,
-                                     len(vocab), config.CHECKPOINT_DIR)
-    best_model_path = best_model_path.replace(f'checkpoint_epoch_{epoch+1}.pt', 'best_model.pt')
-    torch.save({
-        'epoch': epoch+1,
-        'model_state_dict': model.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict(),
-        'train_loss': train_loss,
-        'val_loss': val_loss,
-        'vocab_size': len(vocab)
-    }, best_model_path)
-    print(f"  ✓ New best model saved! (val_loss: {val_loss:.4f})")
+        best_val_loss = val_loss
+        best_model_path = save_checkpoint(model, optimizer, epoch+1, train_loss, val_loss,
+                                          len(vocab), config.CHECKPOINT_DIR)
+        best_model_path = best_model_path.replace(f'checkpoint_epoch_{epoch+1}.pt', 'best_model.pt')
+        torch.save({
+            'epoch': epoch+1,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'train_loss': train_loss,
+            'val_loss': val_loss,
+            'vocab_size': len(vocab)
+        }, best_model_path)
+        print(f"  ✓ New best model saved! (val_loss: {val_loss:.4f})")
 
     print()
 
-# Final evaluation on test set
-    print("="*80)
-    print("FINAL EVALUATION ON TEST SET")
-    print("="*80)
-
-# Load best model
-    if best_model_path and os.path.exists(best_model_path):
-    print(f"Loading best model from: {best_model_path}")
-    checkpoint = torch.load(best_model_path)
-    model.load_state_dict(checkpoint['model_state_dict'])
-
-    test_loss = evaluate(model, test_loader, criterion, device)
-    print(f"\nTest Loss: {test_loss:.4f}")
-
-    print("\n" + "="*80)
-    print("TRAINING COMPLETE!")
-    print("="*80)
-    print(f"Best validation loss: {best_val_loss:.4f}")
-    print(f"Test loss: {test_loss:.4f}")
-    print(f"Best model saved to: {best_model_path}")
-    print(f"Training log saved to: {log_file}")
+print("\n" + "="*80)
+print("TRAINING COMPLETE!")
+print("="*80)
+print(f"Best validation loss: {best_val_loss:.4f}")
+print(f"Best model saved to: {best_model_path}")
+print(f"Training log saved to: {log_file}")
+print("\nNote: Apple news is reserved for inference/testing in a separate script.")
 

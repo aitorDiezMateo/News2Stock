@@ -24,8 +24,9 @@ def create_comparison_plot(df, output_dir):
     fig, axes = plt.subplots(2, 2, figsize=(16, 12))
     fig.suptitle('Summary Generation Models - Performance Comparison', fontsize=16, fontweight='bold')
     
-    # Color palette
-    colors = sns.color_palette("husl", len(df))
+    # Color palettes
+    model_colors = sns.color_palette("husl", len(df))  # One color per model
+    rouge_colors = sns.color_palette("Set2", 3)  # Fixed 3 colors for ROUGE-1, ROUGE-2, ROUGE-L
     
     # 1. ROUGE Scores
     ax1 = axes[0, 0]
@@ -33,11 +34,11 @@ def create_comparison_plot(df, output_dir):
     width = 0.25
     
     ax1.bar(x - width, df['rouge1_mean'], width, label='ROUGE-1', 
-            yerr=df['rouge1_std'], capsize=5, color=colors[0], alpha=0.8)
+            yerr=df['rouge1_std'], capsize=5, color=rouge_colors[0], alpha=0.8)
     ax1.bar(x, df['rouge2_mean'], width, label='ROUGE-2', 
-            yerr=df['rouge2_std'], capsize=5, color=colors[1], alpha=0.8)
+            yerr=df['rouge2_std'], capsize=5, color=rouge_colors[1], alpha=0.8)
     ax1.bar(x + width, df['rougeL_mean'], width, label='ROUGE-L', 
-            yerr=df['rougeL_std'], capsize=5, color=colors[2], alpha=0.8)
+            yerr=df['rougeL_std'], capsize=5, color=rouge_colors[2], alpha=0.8)
     
     ax1.set_xlabel('Model', fontweight='bold')
     ax1.set_ylabel('Score', fontweight='bold')
@@ -50,7 +51,7 @@ def create_comparison_plot(df, output_dir):
     # 2. BLEU Scores
     ax2 = axes[0, 1]
     bars = ax2.bar(df['model_short'], df['bleu_mean'], 
-                   yerr=df['bleu_std'], capsize=5, color=colors, alpha=0.8)
+                   yerr=df['bleu_std'], capsize=5, color=model_colors, alpha=0.8)
     ax2.set_xlabel('Model', fontweight='bold')
     ax2.set_ylabel('BLEU Score', fontweight='bold')
     ax2.set_title('BLEU Scores (Higher is Better)', fontweight='bold')
@@ -67,7 +68,7 @@ def create_comparison_plot(df, output_dir):
     # 3. Length Ratio
     ax3 = axes[1, 0]
     bars = ax3.bar(df['model_short'], df['length_ratio_mean'], 
-                   yerr=df['length_ratio_std'], capsize=5, color=colors, alpha=0.8)
+                   yerr=df['length_ratio_std'], capsize=5, color=model_colors, alpha=0.8)
     ax3.axhline(y=1.0, color='r', linestyle='--', linewidth=2, label='Perfect ratio (1.0)')
     ax3.set_xlabel('Model', fontweight='bold')
     ax3.set_ylabel('Length Ratio', fontweight='bold')

@@ -1,5 +1,7 @@
 model,rank_ROUGE-1,rank_ROUGE-2,rank_ROUGE-L,rank_BLEU,avg_rank,final_rank
 apple_news_pointer_generator_fasttext,1,1,1,1,1.0,1
-apple_news_simple_seq2seq_fasttext,3,2,2,2,2.25,2
-apple_news_pointer_generator,2,3,3,4,3.0,3
-apple_news_simple_seq2seq,4,4,4,3,3.75,4
+apple_news_simple_seq2seq_fasttext,3,3,3,4,3.25,2
+apple_news_pointer_generator,2,4,2,6,3.5,3
+apple_news_transformer_fasttext,6,2,5,2,3.75,4
+apple_news_simple_seq2seq,4,5,4,5,4.5,5
+apple_news_transformer,5,6,6,3,5.0,6

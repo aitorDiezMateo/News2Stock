@@ -1,0 +1,68 @@
+Job ID: 3824955
+Running on node: hyperion-118.sw.ehu.es
+Starting time: Thu Nov 27 16:33:53 CET 2025
+GPU assigned: 0
+Working directory: /scratch/aitordiez/News2Stock/summaries/transformer
+Starting Transformer training...
+Device: cuda
+Loading all news data (excluding Apple)...
+Looking for files in: /scratch/aitordiez/News2Stock/data/news/summarized
+  Loaded amazon: 12391 articles
+  Loaded google: 13341 articles
+  Loaded meta: 15187 articles
+  Loaded microsoft: 12932 articles
+  Loaded nvidia: 10215 articles
+  Loaded tesla: 27131 articles
+
+Total data (excluding Apple): 91197 articles
+Training data: 72957 articles (80%)
+Validation data: 18240 articles (20%)
+
+Loading Apple news for testing...
+Total test data (Apple): 24208 articles
+
+================================================================================
+TESTING MODEL ON APPLE NEWS
+================================================================================
+
+Test Loss (Apple): 3.1081
+
+--------------------------------------------------------------------------------
+GENERATING SUMMARIES FOR APPLE NEWS
+--------------------------------------------------------------------------------
+
+[Sample 1]
+Original Text: Jim Kelleher of Argus Research wrote in a note on Friday that Apple Inc. (NASDAQ: AAPL ) is expected to report “strong” first quarter results due to t...
+True Summary: Apple to report “strong” first quarter results, analyst says. Shares reiterated with a $125 price target boosted to a previous $120: Argus Research. “ Seasonal strength” is likely to continue for the next two years, the firm says . tmsnrt is reiterating its Buy rating on the stock, but raising its target to $125 from $113 in June.. tout iPhone 6 and 6 Plus sales, seasonality
+Generated Summary: says he expects strong earnings growth in the second quarter. shares of the chipmaker are down more than 20% this year, making them the worst-performing stock in recent months. (nomura, citi all maintain on the stock .) ) shares are down more than 20% this year, making them the worst-performing stock in the s&p 500
+
+[Sample 2]
+Original Text: Quartz recently polled 811 smartphone users living in the U.S. asking their intentions to buy Apple Inc.'s (NASDAQ: AAPL ) upcoming Apple Watch produc...
+True Summary: Only 2.2 percent of iPhone owners surveyed are ‘extremely likely’ to buy one.Quartz poll also suggests price, face-to-face sales to be key issues.s. Apple Watch is expected to start selling at $350 in U.S., but cost may be a problem for tech giant. to see one in person: Quartz.tumblr.com, natching up some of the data
+Generated Summary: says it is to make the of
+
+[Sample 3]
+Original Text: Earlier this week, Nielsen SoundScan released data showing that US consumers purchased and downloaded 12 percent fewer songs in 2014 compared to a yea...
+True Summary: Online streaming has become a growing trend in the music industry. Spotify is expected to go public some time in 2015, with a valuation of around $10 billion. (No word yet on whether Apple will follow suit) Google, Apple and Pandora all look to be on the verge of growth next year., but are they ready to take on bigger players?, in their own right.. .
+Generated Summary: is a for the company, says is a for the company, but it is not clear if it will be a
+
+[Sample 4]
+Original Text: Apple Inc. (NASDAQ: AAPL ) shares are trading lower by $1.34 at $109.04 in Friday's session.  It is well off its lows for the session ($107.35), which...
+True Summary: Shares are well off their lows for the session at $107.35. Apple reported better-than-expected fourth-quarter earnings on Thursday, but sales fell short of analysts' expectations. Meantime, the iPhone maker is expected to unveil new Macs in the next few weeks, possibly as early as next week. ''It's not a good time to sell,' says analyst
+Generated Summary: shares of the chipmaker are trading lower by more than 2% in after-hours trading. apple is set to release its latest version of its operating system, windows 10, later this the company is also working on a range of new products in the us, but it is not clear if it will be able to meet its goal of having a
+
+[Sample 5]
+Original Text: http://www.apple.com/watch/
+
+http://www.apple.com/uk/watch/...
+True Summary: Watch the unboxing of Apple's new iPhone 6 Plus in black, white, silver and rose gold. The device is due to be released in the US, Europe and Australia in September.. 888-738-5526 888-738-5526 in London, New York, San Francisco, Los Angeles, Chicago, Dallas, Austin, Miami, Phoenix, Seattle, and San Franciscans, among other cities, as well as in some countries
+Generated Summary: says it will cut up to 5,000 jobs as part of cost-cutting to on youtube to stay up-to-date on all the latest industry news and subscribe to our youtube channel for all the latest news and analysis: follow us on twitter:
+
+✓ Saved 24208 generated summaries to /scratch/aitordiez/News2Stock/data/news/inference/apple_news_transformer.parquet
+
+================================================================================
+TESTING COMPLETE
+================================================================================
+Training completed successfully!
+Ending time: Thu Nov 27 19:47:50 CET 2025
+Job finished at: Thu Nov 27 19:47:50 CET 2025

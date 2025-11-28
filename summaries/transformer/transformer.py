@@ -359,6 +359,7 @@ class TransformerSummarizerTrainer:
 
 if __name__ == "__main__":
     from torch.utils.data import Dataset, DataLoader
+    from sklearn.model_selection import train_test_split
     
     class SummarizationDataset(Dataset):
         def __init__(self, texts, summaries, tokenizer, max_src_len=512, max_tgt_len=128):
@@ -433,8 +434,13 @@ if __name__ == "__main__":
     if not all_data:
         raise ValueError(f"No parquet files found in {news_dir}")
     
-    train_data = pd.concat(all_data, ignore_index=True)
-    print(f"\nTotal training data: {len(train_data)} articles")
+    all_train_data = pd.concat(all_data, ignore_index=True)
+    print(f"\nTotal data (excluding Apple): {len(all_train_data)} articles")
+    
+    # Split 80/20 for training and validation
+    train_data, val_data = train_test_split(all_train_data, test_size=0.2, random_state=42)
+    print(f"Training data: {len(train_data)} articles (80%)")
+    print(f"Validation data: {len(val_data)} articles (20%)")
     
     print("\nLoading Apple news for testing...")
     test_data = pd.read_parquet(news_dir / "apple_news.parquet")
@@ -442,11 +448,19 @@ if __name__ == "__main__":
     print(f"Total test data (Apple): {len(test_data)} articles")
     
     tokenizer = SimpleTokenizer(vocab_size=10000)
-    tokenizer.build_vocab(pd.concat([train_data['clean_body'], train_data['body_summary']]).tolist())
+    tokenizer.build_vocab(pd.concat([all_train_data['clean_body'], all_train_data['body_summary']]).tolist())
     
     train_dataset = SummarizationDataset(
         train_data['clean_body'].tolist(),
         train_data['body_summary'].tolist(),
+        tokenizer,
+        max_src_len=512,
+        max_tgt_len=128
+    )
+    
+    val_dataset = SummarizationDataset(
+        val_data['clean_body'].tolist(),
+        val_data['body_summary'].tolist(),
         tokenizer,
         max_src_len=512,
         max_tgt_len=128
@@ -461,6 +475,7 @@ if __name__ == "__main__":
     )
     
     train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False)
     test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False)
     
     model = TransformerSummarizer(
@@ -475,7 +490,7 @@ if __name__ == "__main__":
     )
     
     trainer = TransformerSummarizerTrainer(model, device=device)
-    trainer.fit(train_loader, train_loader, epochs=20, early_stopping_patience=5)
+    trainer.fit(train_loader, val_loader, epochs=20, early_stopping_patience=5)
     
     print("\n" + "="*80)
     print("TESTING MODEL ON APPLE NEWS")

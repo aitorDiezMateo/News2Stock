@@ -1,0 +1,17 @@
+
+==============================================================================
+                        Miniforge3 Environment Loaded
+==============================================================================
+  Activated environment: miniforge3-base
+                                                                              
+  NOTE: This is a custom minimal environment.
+        We recommend creating your own conda environments for your
+        projects.
+                                                                              
+  More info: https://scc.dipc.org/docs/programming/languages/python/
+==============================================================================
+
+  File "/scratch/aitordiez/News2Stock/summaries/simple_seq2seq/train.py", line 228
+    f.write(f"{epoch+1},{train_loss:.4f},{val_loss:.4f},{end_time-start_time:.2f}\n")
+    ^
+IndentationError: expected an indented block after 'with' statement on line 227
