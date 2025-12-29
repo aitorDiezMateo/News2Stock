@@ -242,7 +242,9 @@ def main(save_per_sample=False):
         'simple_seq2seq',
         'simple_seq2seq_fasttext',
         'pointer_generator',
-        'pointer_generator_fasttext'
+        'pointer_generator_fasttext',
+        'transformer',
+        'transformer_fasttext'
     ]
     
     # Evaluate each model
