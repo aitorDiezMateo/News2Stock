@@ -1,7 +1,0 @@
-Job ID: 3674654
-Running on node: hyperion-052.sw.ehu.es
-Starting time: Tue Nov 18 23:36:27 CET 2025
-GPU assigned: 0
-Working directory: /scratch/aitordiez/News2Stock/pointer_generator_fasttext
-Preprocessed data not found. Running preprocessing first...
-Preprocessing failed!

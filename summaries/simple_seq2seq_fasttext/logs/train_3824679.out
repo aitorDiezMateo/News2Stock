@@ -1,0 +1,7 @@
+Job ID: 3824679
+Running on node: hyperion-118.sw.ehu.es
+Starting time: Thu Nov 27 16:24:55 CET 2025
+GPU assigned: 0
+Working directory: /scratch/aitordiez/News2Stock/summaries/simple_seq2seq_fasttext
+Starting training...
+Training failed!

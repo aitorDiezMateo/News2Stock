@@ -2,6 +2,7 @@
 Data preprocessing script for Pointer-Generator Network
 """
 
+import os
 import pandas as pd
 import re
 import pickle
@@ -49,11 +50,11 @@ def load_and_preprocess_data(data_path: str = None) -> Tuple[List[List[str]], Li
         targets: List of tokenized target summaries
     """
     if data_path is None:
-        # Load all company data
-        companies = ['amazon', 'apple', 'google', 'meta', 'microsoft', 'nvidia', 'tesla']
+        # Load all company data (excluding Apple - reserved for inference/testing)
+        companies = ['amazon', 'google', 'meta', 'microsoft', 'nvidia', 'tesla']
         data_dir = config.ROOT_DIR + '/data/news/summarized/'
         
-        print("Loading data from all companies...")
+        print("Loading data from all companies (excluding Apple)...")
         dfs = []
         for company in companies:
             company_path = f"{data_dir}{company}_news.parquet"
@@ -127,35 +128,29 @@ def load_and_preprocess_data(data_path: str = None) -> Tuple[List[List[str]], Li
 
 
 def split_data(sources: List[List[str]], targets: List[List[str]], 
-               train_ratio: float = 0.8, val_ratio: float = 0.1):
+               train_ratio: float = 0.8):
     """
-    Split data into train, validation, and test sets
+    Split data into train and validation sets (80/20)
     
     Args:
         sources: List of tokenized source texts
         targets: List of tokenized target summaries
-        train_ratio: Proportion for training
-        val_ratio: Proportion for validation (rest goes to test)
+        train_ratio: Proportion for training (rest goes to validation)
     """
     n = len(sources)
     train_size = int(n * train_ratio)
-    val_size = int(n * val_ratio)
     
     train_sources = sources[:train_size]
     train_targets = targets[:train_size]
     
-    val_sources = sources[train_size:train_size + val_size]
-    val_targets = targets[train_size:train_size + val_size]
-    
-    test_sources = sources[train_size + val_size:]
-    test_targets = targets[train_size + val_size:]
+    val_sources = sources[train_size:]
+    val_targets = targets[train_size:]
     
     print(f"\nData split:")
-    print(f"  Train: {len(train_sources)} examples")
-    print(f"  Val: {len(val_sources)} examples")
-    print(f"  Test: {len(test_sources)} examples")
+    print(f"  Train: {len(train_sources)} examples ({train_ratio*100:.0f}%)")
+    print(f"  Val: {len(val_sources)} examples ({(1-train_ratio)*100:.0f}%)")
     
-    return (train_sources, train_targets), (val_sources, val_targets), (test_sources, test_targets)
+    return (train_sources, train_targets), (val_sources, val_targets)
 
 
 print("="*80)
@@ -166,8 +161,8 @@ print("="*80)
 # Set data_path=None to load all companies, or specify a path for single company
 sources, targets = load_and_preprocess_data(data_path=None)  # Load all companies
 
-# Split data
-train_data, val_data, test_data = split_data(sources, targets)
+# Split data (80% train, 20% val - Apple excluded for inference)
+train_data, val_data = split_data(sources, targets)
 
 # Build vocabulary from training data only
 print("\n" + "="*80)
@@ -187,7 +182,6 @@ print("="*80)
 data_dict = {
     'train': train_data,
     'val': val_data,
-    'test': test_data,
     'vocab': vocab
 }
 

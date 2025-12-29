@@ -1,0 +1,25 @@
+Job ID: 3824958
+Running on node: hyperion-182.sw.ehu.es
+Starting time: Thu Nov 27 16:34:29 CET 2025
+GPU assigned: 0
+Working directory: /scratch/aitordiez/News2Stock/summaries/transformer_fasttext
+Starting Transformer FastText training...
+Device: cuda
+Loading all news data (excluding Apple)...
+Looking for files in: /scratch/aitordiez/News2Stock/data/news/summarized
+  Loaded amazon: 12391 articles
+  Loaded google: 13341 articles
+  Loaded meta: 15187 articles
+  Loaded microsoft: 12932 articles
+  Loaded nvidia: 10215 articles
+  Loaded tesla: 27131 articles
+
+Total data (excluding Apple): 91197 articles
+Training data: 72957 articles (80%)
+Validation data: 18240 articles (20%)
+
+Loading Apple news for testing...
+Total test data (Apple): 24208 articles
+
+Loading FastText model for word embeddings...
+Training failed!

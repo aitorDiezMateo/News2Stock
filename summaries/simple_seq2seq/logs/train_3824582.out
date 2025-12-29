@@ -1,0 +1,59 @@
+Job ID: 3824582
+Running on node: hyperion-118.sw.ehu.es
+Starting time: Thu Nov 27 16:23:06 CET 2025
+GPU assigned: 0
+Working directory: /scratch/aitordiez/News2Stock/summaries/simple_seq2seq
+Preprocessed data not found. Running preprocessing first...
+================================================================================
+PREPROCESSING NEWS DATASET
+================================================================================
+Loading data from all companies (excluding Apple)...
+  ✓ Loaded amazon: 12391 examples
+  ✓ Loaded google: 13341 examples
+  ✓ Loaded meta: 15187 examples
+  ✓ Loaded microsoft: 12932 examples
+  ✓ Loaded nvidia: 10215 examples
+  ✓ Loaded tesla: 27131 examples
+
+✓ Total combined: 91197 examples
+Dataset shape: (91197, 7)
+Columns: ['id', 'author', 'created', 'title', 'teaser', 'clean_body', 'body_summary']
+
+✓ Using 'clean_body' as source (original text)
+✓ Using 'body_summary' as target (summary)
+
+After removing NaN: 91197 examples
+
+Cleaning and tokenizing...
+Final dataset size: 83234 examples
+
+Source statistics:
+  Mean length: 506.2
+  Max length: 68068
+  Min length: 10
+
+Target statistics:
+  Mean length: 73.6
+  Max length: 359
+  Min length: 24
+
+Data split:
+  Train: 66587 examples (80%)
+  Val: 16647 examples (20%)
+
+================================================================================
+BUILDING VOCABULARY
+================================================================================
+Vocabulary built with 20000 words
+Most common words: [('the', 1842441), ('to', 1066171), ('of', 872241), ('a', 794618), ('and', 743766), ('in', 691709), ('s', 564561), ('on', 448137), ('for', 405958), ('is', 401809)]
+
+================================================================================
+SAVING PREPROCESSED DATA
+================================================================================
+Saved preprocessed data to: /scratch/aitordiez/News2Stock/summaries/simple_seq2seq/preprocessed_data.pkl
+Vocabulary size: 20000
+
+Preprocessing complete!
+Preprocessing complete!
+Starting training...
+Training failed!

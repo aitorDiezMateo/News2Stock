@@ -4,6 +4,7 @@ Batch inference script for generating summaries with all four trained models
 
 import os
 import sys
+import re
 import torch
 import pickle
 import pandas as pd
@@ -11,10 +12,37 @@ from tqdm import tqdm
 from datetime import datetime
 
 
+def clean_text(text: str) -> str:
+    """Clean and normalize text"""
+    if pd.isna(text):
+        return ""
+    
+    # Convert to string and lowercase
+    text = str(text).lower()
+    
+    # Remove URLs
+    text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE)
+    
+    # Remove email addresses
+    text = re.sub(r'\S+@\S+', '', text)
+    
+    # Remove extra whitespace
+    text = re.sub(r'\s+', ' ', text)
+    
+    return text.strip()
+
+
+def tokenize(text: str) -> list:
+    """Simple word tokenization"""
+    # Split on whitespace and punctuation
+    tokens = re.findall(r'\b\w+\b', text)
+    return tokens
+
+
 def load_seq2seq_model(model_dir, device):
     """Load simple seq2seq model"""
     # Clean any previous imports to avoid conflicts
-    modules_to_remove = ['config', 'model', 'preprocess', 'vocabulary', 'dataset']
+    modules_to_remove = ['config', 'model', 'vocabulary', 'dataset']
     for mod in modules_to_remove:
         if mod in sys.modules:
             del sys.modules[mod]
@@ -26,7 +54,6 @@ def load_seq2seq_model(model_dir, device):
         # Import modules (they will now find 'config' correctly)
         import config
         from model import Encoder, Decoder, Attention, Seq2Seq
-        from preprocess import clean_text, tokenize
         
         # Load vocabulary
         vocab_path = os.path.join(model_dir, 'preprocessed_data.pkl')
@@ -65,11 +92,7 @@ def load_seq2seq_model(model_dir, device):
         model.load_state_dict(checkpoint['model_state_dict'])
         model.eval()
         
-        # Save references to functions we need
-        clean_text_fn = clean_text
-        tokenize_fn = tokenize
-        
-        return model, vocab, config, clean_text_fn, tokenize_fn
+        return model, vocab, config
     
     finally:
         # Remove from path
@@ -79,7 +102,7 @@ def load_seq2seq_model(model_dir, device):
 def load_pointer_generator_model(model_dir, device):
     """Load pointer-generator model"""
     # Clean any previous imports to avoid conflicts
-    modules_to_remove = ['config', 'model', 'preprocess', 'vocabulary', 'dataset']
+    modules_to_remove = ['config', 'model', 'vocabulary', 'dataset']
     for mod in modules_to_remove:
         if mod in sys.modules:
             del sys.modules[mod]
@@ -91,7 +114,6 @@ def load_pointer_generator_model(model_dir, device):
         # Import modules
         import config
         from model import Encoder, Decoder, Attention, PointerGeneratorNetwork
-        from preprocess import clean_text, tokenize
         
         # Load vocabulary
         vocab_path = os.path.join(model_dir, 'preprocessed_data.pkl')
@@ -129,18 +151,14 @@ def load_pointer_generator_model(model_dir, device):
         model.load_state_dict(checkpoint['model_state_dict'])
         model.eval()
         
-        # Save references to functions we need
-        clean_text_fn = clean_text
-        tokenize_fn = tokenize
-        
-        return model, vocab, config, clean_text_fn, tokenize_fn
+        return model, vocab, config
     
     finally:
         # Remove from path
         sys.path.pop(0)
 
 
-def generate_summary_seq2seq(model, source_text, vocab, config, clean_text, tokenize, device, max_length=100):
+def generate_summary_seq2seq(model, source_text, vocab, config, device, max_length=100):
     """Generate summary using simple seq2seq model"""
     model.eval()
     
@@ -193,7 +211,7 @@ def generate_summary_seq2seq(model, source_text, vocab, config, clean_text, toke
     return summary
 
 
-def generate_summary_pointer_generator(model, source_text, vocab, config, clean_text, tokenize, device, max_length=100):
+def generate_summary_pointer_generator(model, source_text, vocab, config, device, max_length=100):
     """Generate summary using pointer-generator model (greedy decoding)"""
     model.eval()
     
@@ -334,9 +352,9 @@ def main():
         print(f"\nLoading model from {model_dir}...")
         try:
             if model_type == 'seq2seq':
-                model, vocab, config, clean_text, tokenize = load_seq2seq_model(model_dir, device)
+                model, vocab, config = load_seq2seq_model(model_dir, device)
             else:  # pointer_generator
-                model, vocab, config, clean_text, tokenize = load_pointer_generator_model(model_dir, device)
+                model, vocab, config = load_pointer_generator_model(model_dir, device)
             
             print(f"✓ Model loaded successfully")
             print(f"  Vocabulary size: {len(vocab)}")
@@ -368,11 +386,11 @@ def main():
             try:
                 if model_type == 'seq2seq':
                     summary = generate_summary_seq2seq(
-                        model, source_text, vocab, config, clean_text, tokenize, device
+                        model, source_text, vocab, config, device
                     )
                 else:  # pointer_generator
                     summary = generate_summary_pointer_generator(
-                        model, source_text, vocab, config, clean_text, tokenize, device
+                        model, source_text, vocab, config, device
                     )
                 summaries.append(summary)
             except Exception as e:
