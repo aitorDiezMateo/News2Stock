@@ -188,7 +188,7 @@ def main():
     # Save metrics to CSV
     save_metrics_to_csv(
         test_metrics,
-        os.path.join(Config.RESULTS_PATH, 'test_metrics.csv')
+        os.path.join(Config.RESULTS_PATH, f'test_metrics_{Config.STOCK_EMBEDDING_TYPE}_{Config.WINDOW_SIZE}.csv')
     )
     
     # Save training info
@@ -210,9 +210,9 @@ def main():
         'class_weights': class_weights.tolist()
     }
     
-    with open(os.path.join(Config.RESULTS_PATH, 'training_info.json'), 'w') as f:
+    with open(os.path.join(Config.RESULTS_PATH, f'training_info_{Config.STOCK_EMBEDDING_TYPE}_{Config.WINDOW_SIZE}.json'), 'w') as f:
         json.dump(training_info, f, indent=2)
-    print(f"✓ Training info saved to {Config.RESULTS_PATH}training_info.json")
+    print(f"✓ Training info saved to {os.path.join(Config.RESULTS_PATH, f'training_info_{Config.STOCK_EMBEDDING_TYPE}_{Config.WINDOW_SIZE}.json')}")
     
     # ========================================================================
     # SUMMARY

@@ -311,7 +311,7 @@ def run_training():
         'timestamp': datetime.now().isoformat()
     }
     
-    results_path = os.path.join(Config.RESULTS_DIR, 'attention_results.json')
+    results_path = os.path.join(Config.RESULTS_DIR, f'attention_results_{Config.STOCK_EMBEDDING_TYPE}_{Config.WINDOW_SIZE}.json')
     with open(results_path, 'w') as f:
         json.dump(results, f, indent=2)
     print(f"✓ Saved: {results_path}")
@@ -329,7 +329,7 @@ def run_training():
         'training_time': training_results['training_time'],
     }])
     
-    csv_path = os.path.join(Config.RESULTS_DIR, 'test_metrics.csv')
+    csv_path = os.path.join(Config.RESULTS_DIR, f'test_metrics_{Config.STOCK_EMBEDDING_TYPE}_{Config.WINDOW_SIZE}.csv')
     metrics_df.to_csv(csv_path, index=False)
     print(f"✓ Saved: {csv_path}")
     

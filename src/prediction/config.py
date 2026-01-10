@@ -56,7 +56,7 @@ class Config:
     # 1 = predict next day (day 21 vs day 20)
     # 5 = predict 5 days ahead (day 25 vs day 20)
     # 10 = predict 10 days ahead (day 30 vs day 20)
-    PREDICTION_HORIZON = 5  # Default: 5 days ahead
+    PREDICTION_HORIZON = 1  # Default: 5 days ahead
     
     # Neutral zone definition: ±NEUTRAL_THRESHOLD * volatility
     # For longer horizons, you may want to increase this
@@ -101,11 +101,11 @@ class Config:
     # Stock embedding dimension depends on type:
     # - 'patchtst': 128
     # - 'chronos': 768
-    # - 'lstm_multihead': 256 (or configured value)
+    # - 'lstm_multihead': 64 (actual embedding dimension)
     STOCK_EMBEDDING_DIM = {
         'patchtst': 128,
         'chronos': 768,
-        'lstm_multihead': 256
+        'lstm_multihead': 64
     }.get(STOCK_EMBEDDING_TYPE, 128)
     
     # News embedding dimension depends on type:
@@ -121,8 +121,8 @@ class Config:
     # ========================================================================
     NUM_CLASSES = 3  # DOWN, NEUTRAL, UP
     
-    # Hidden layer dimensions (4 layers)
-    HIDDEN_DIMS = [512, 256, 128, 64]
+    # Hidden layer dimensions
+    HIDDEN_DIMS = [256, 128, 64]
     
     # Dropout probability
     DROPOUT = 0.3

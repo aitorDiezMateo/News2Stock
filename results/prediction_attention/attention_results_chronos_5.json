@@ -1,0 +1,44 @@
+{
+  "config": {
+    "stock_embedding_type": "chronos",
+    "news_embedding_type": "contextual",
+    "window_size": 5,
+    "attention_dim": 768,
+    "num_attention_heads": 8,
+    "num_transformer_layers": 2,
+    "batch_size": 64,
+    "learning_rate": 0.0001,
+    "include_ticker": true,
+    "use_positional_encoding": true
+  },
+  "training": {
+    "epochs_trained": 34,
+    "training_time": "0:01:44.743021",
+    "best_val_loss": 1.095683545160642,
+    "best_val_accuracy": 0.4029219530949635
+  },
+  "test_metrics": {
+    "accuracy": 0.39523260284505957,
+    "precision_macro": 0.3783547612176911,
+    "recall_macro": 0.37076035442998506,
+    "f1_macro": 0.3635492439063288,
+    "confusion_matrix": [
+      [
+        110,
+        228,
+        286
+      ],
+      [
+        139,
+        519,
+        503
+      ],
+      [
+        109,
+        308,
+        399
+      ]
+    ]
+  },
+  "timestamp": "2026-01-10T18:05:53.850300"
+}

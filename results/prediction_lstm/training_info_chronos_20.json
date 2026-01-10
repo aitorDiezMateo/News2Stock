@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-01-10T18:40:00.089874",
+  "strategy": "LSTM Daily Aggregation",
+  "window_size": 20,
+  "rnn_type": "lstm",
+  "lstm_hidden_size": 256,
+  "lstm_bidirectional": true,
+  "num_samples": 17234,
+  "train_samples": 12063,
+  "test_samples": 2586,
+  "num_epochs_trained": 37,
+  "best_val_loss": 1.0882066888550956,
+  "best_val_acc": 0.39729206963249514,
+  "test_accuracy": 0.3739365815931941,
+  "test_f1_macro": 0.3510338120047367
+}

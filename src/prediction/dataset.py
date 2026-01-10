@@ -278,21 +278,6 @@ def create_combined_dataset(
                 # Combine features: stock_embedding + news_embedding + price_features + technical_features + ticker_onehot (optional)
                 feature_parts = [stock_embedding, news_embedding]
                 
-                # Add PRICE FEATURES (same as benchmark)
-                if Config.USE_PRICE_FEATURES:
-                    price_features = []
-                    for feat_name in Config.PRICE_FEATURES:
-                        if feat_name in stock_data_df.columns and window_end_date in stock_data_df.index:
-                            feat_value = stock_data_df.loc[window_end_date, feat_name]
-                            if pd.isna(feat_value):
-                                feat_value = 0.0
-                            price_features.append(feat_value)
-                        else:
-                            price_features.append(0.0)
-                    
-                    price_features = np.array(price_features, dtype=np.float32)
-                    feature_parts.append(price_features)
-                
                 # Add TECHNICAL FEATURES
                 if Config.USE_TECHNICAL_FEATURES:
                     tech_features = []

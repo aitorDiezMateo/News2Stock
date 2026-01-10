@@ -175,7 +175,7 @@ def main():
         save_dir=Config.PLOTS_PATH
     )
     
-    save_metrics_to_csv(test_metrics, os.path.join(Config.RESULTS_PATH, 'test_metrics.csv'))
+    save_metrics_to_csv(test_metrics, os.path.join(Config.RESULTS_PATH, f'test_metrics_{Config.STOCK_EMBEDDING_TYPE}_{Config.WINDOW_SIZE}.csv'))
     
     # Save training info
     training_info = {
@@ -195,7 +195,7 @@ def main():
         'test_f1_macro': float(test_metrics['f1_macro']),
     }
     
-    with open(os.path.join(Config.RESULTS_PATH, 'training_info.json'), 'w') as f:
+    with open(os.path.join(Config.RESULTS_PATH, f'training_info_{Config.STOCK_EMBEDDING_TYPE}_{Config.WINDOW_SIZE}.json'), 'w') as f:
         json.dump(training_info, f, indent=2)
     
     # ========================================================================

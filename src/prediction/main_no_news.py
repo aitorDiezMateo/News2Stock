@@ -377,7 +377,7 @@ def main():
     # Save metrics
     save_metrics_to_csv(
         test_metrics,
-        os.path.join(Config.RESULTS_PATH, 'test_metrics_no_news.csv')
+        os.path.join(Config.RESULTS_PATH, f'test_metrics_no_news_{Config.STOCK_EMBEDDING_TYPE}_{Config.WINDOW_SIZE}.csv')
     )
     
     # Save training info
@@ -399,7 +399,7 @@ def main():
         'news_embeddings': False
     }
     
-    with open(os.path.join(Config.RESULTS_PATH, 'training_info_no_news.json'), 'w') as f:
+    with open(os.path.join(Config.RESULTS_PATH, f'training_info_no_news_{Config.STOCK_EMBEDDING_TYPE}_{Config.WINDOW_SIZE}.json'), 'w') as f:
         json.dump(training_info, f, indent=2)
     
     # ========================================================================
@@ -422,7 +422,7 @@ def main():
     print(f"\nCompare with main.py (WITH news) to measure news impact!")
     print(f"\nSaved files:")
     print(f"  Model: {model_path}")
-    print(f"  Metrics: {Config.RESULTS_PATH}test_metrics_no_news.csv")
+    print(f"  Metrics: {os.path.join(Config.RESULTS_PATH, f'test_metrics_no_news_{Config.STOCK_EMBEDDING_TYPE}_{Config.WINDOW_SIZE}.csv')}")
     
     print("\n" + "=" * 70 + "\n")
     

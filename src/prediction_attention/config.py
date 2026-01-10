@@ -34,7 +34,7 @@ class Config:
     WINDOW_SIZE = 20  # Days in each window (configurable)
     
     # Stock embedding type: 'patchtst', 'chronos', 'lstm_multihead'
-    STOCK_EMBEDDING_TYPE = 'chronos'
+    STOCK_EMBEDDING_TYPE = 'lstm_multihead'
     
     # Stock embeddings path includes window size dynamically
     STOCK_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', f'{STOCK_EMBEDDING_TYPE}_{WINDOW_SIZE}') + os.sep
@@ -60,7 +60,7 @@ class Config:
     STOCK_EMBEDDING_DIM = {
         'patchtst': 128,
         'chronos': 768,
-        'lstm_multihead': 256
+        'lstm_multihead': 64
     }.get(STOCK_EMBEDDING_TYPE, 128)
     
     # News embedding type: 'contextual' or 'no_context'
@@ -99,7 +99,7 @@ class Config:
     # PRICE FEATURES (same as benchmark)
     # ========================================================================
     # Base price features that benchmark models use
-    USE_PRICE_FEATURES = True
+    USE_PRICE_FEATURES = False
     
     PRICE_FEATURES = [
         'Open', 'High', 'Low', 'Close', 'Volume',

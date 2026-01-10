@@ -1,0 +1,2 @@
+model,accuracy,precision_macro,recall_macro,f1_macro,roc_auc_macro,epochs_trained,training_time
+AttentionPrediction,0.34454756380510443,0.38081593265691915,0.3735118109408822,0.3439988859660887,0.540818281711919,33,0:03:15.947902
