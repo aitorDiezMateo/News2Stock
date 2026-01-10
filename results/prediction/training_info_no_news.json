@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-01-02T21:34:39.340356",
+  "experiment": "NO_NEWS_EMBEDDINGS",
+  "tickers": [
+    "AAPL",
+    "AMZN",
+    "GOOGL",
+    "META",
+    "MSFT",
+    "NVDA",
+    "TSLA"
+  ],
+  "num_samples": 17234,
+  "train_samples": 12063,
+  "val_samples": 2585,
+  "test_samples": 2586,
+  "input_dim": 775,
+  "hidden_dims": [
+    256,
+    128,
+    64
+  ],
+  "num_epochs_trained": 27,
+  "best_val_loss": 1.0915294347925388,
+  "best_val_acc": 0.37176015473887813,
+  "test_accuracy": 0.3588553750966744,
+  "test_f1_macro": 0.35488607821603674,
+  "news_embeddings": false
+}
