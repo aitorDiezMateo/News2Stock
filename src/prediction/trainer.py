@@ -354,7 +354,7 @@ class Trainer:
                 'input_dim': self.model.input_dim,
                 'hidden_dims': self.model.hidden_dims,
                 'num_classes': self.model.num_classes,
-                'dropout': self.model.dropout_rate,
+                'dropout': self.model.dropout,
                 'use_batch_norm': self.model.use_batch_norm,
                 'activation': self.model.activation_name
             }

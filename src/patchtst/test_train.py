@@ -12,7 +12,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from patchtst.config import Config
-from patchtst.train import main
+from patchtst.main import main
 
 # Override config for quick testing
 Config.NUM_EPOCHS = 5

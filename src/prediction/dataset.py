@@ -275,14 +275,34 @@ def create_combined_dataset(
                     Config.NEUTRAL_THRESHOLD
                 )
                 
-                # Combine features
+                # Combine features: stock_embedding + news_embedding + technical_features (optional) + ticker_onehot (optional)
+                feature_parts = [stock_embedding, news_embedding]
+                
+                # Add technical features if enabled
+                if Config.USE_TECHNICAL_FEATURES:
+                    tech_features = []
+                    for feat_name in Config.TECHNICAL_FEATURES:
+                        if feat_name in stock_data_df.columns and window_end_date in stock_data_df.index:
+                            feat_value = stock_data_df.loc[window_end_date, feat_name]
+                            # Handle NaN values
+                            if pd.isna(feat_value):
+                                feat_value = 0.0
+                            tech_features.append(feat_value)
+                        else:
+                            # Feature not found, use 0
+                            tech_features.append(0.0)
+                    
+                    tech_features = np.array(tech_features, dtype=np.float32)
+                    feature_parts.append(tech_features)
+                
+                # Add ticker one-hot encoding if enabled
                 if Config.INCLUDE_TICKER_FEATURE:
-                    # One-hot encoding for ticker
                     ticker_onehot = np.zeros(len(tickers))
                     ticker_onehot[ticker_to_idx[ticker]] = 1.0
-                    features = np.concatenate([stock_embedding, news_embedding, ticker_onehot])
-                else:
-                    features = np.concatenate([stock_embedding, news_embedding])
+                    feature_parts.append(ticker_onehot)
+                
+                # Concatenate all feature parts
+                features = np.concatenate(feature_parts)
                 
                 all_features.append(features)
                 all_labels.append(label)
@@ -314,6 +334,8 @@ def create_combined_dataset(
         print(f"  Feature dimension: {features.shape[1]}")
         print(f"    - Stock embedding: {Config.STOCK_EMBEDDING_DIM}")
         print(f"    - News embedding: {Config.NEWS_EMBEDDING_DIM}")
+        if Config.USE_TECHNICAL_FEATURES:
+            print(f"    - Technical features: {Config.TECHNICAL_FEATURES_DIM}")
         if Config.INCLUDE_TICKER_FEATURE:
             print(f"    - Ticker one-hot: {len(tickers)}")
         print(f"\n  Class distribution:")

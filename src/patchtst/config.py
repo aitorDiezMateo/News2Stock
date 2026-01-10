@@ -8,20 +8,20 @@ class Config:
     """Configuration class for PatchTST model and training."""
     
     # ========================================================================
-    # PATHS
-    # ========================================================================
-    DATA_PATH_LOAD = 'data/stocks/processed/'
-    MODEL_SAVE_PATH = 'models/patchtst/'
-    EMBEDDINGS_SAVE_PATH = 'data/embeddings/patchtst/'
-    PLOTS_PATH = 'plots/patchtst/'
-    
-    # ========================================================================
     # DATA
     # ========================================================================
     TICKERS = ['GOOGL', 'AAPL', 'AMZN', 'META', 'MSFT', 'NVDA', 'TSLA']
     TARGET_COL = 'LOG_RETURN'  # Column to use for training
     WINDOW_SIZE = 20  # 20 trading days
     STRIDE = 1  # Stride for creating windows (1 = maximum overlap)
+    
+    # ========================================================================
+    # PATHS (defined after WINDOW_SIZE to use it dynamically)
+    # ========================================================================
+    DATA_PATH_LOAD = 'data/stocks/processed/'
+    MODEL_SAVE_PATH = 'models/patchtst/'
+    EMBEDDINGS_SAVE_PATH = f'data/embeddings/patchtst_{WINDOW_SIZE}/'
+    PLOTS_PATH = 'plots/patchtst/'
     
     # ========================================================================
     # MODEL ARCHITECTURE

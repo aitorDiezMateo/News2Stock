@@ -23,7 +23,6 @@ class Config:
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     STOCK_DATA_PATH = os.path.join(ROOT_DIR, 'data', 'stocks', 'processed')
     NEWS_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'news', 'embeddings')
-    STOCK_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', 'chronos')
     RESULTS_PATH = os.path.join(ROOT_DIR, 'results', 'finbert_lstm')
     
     # Tickers
@@ -41,6 +40,10 @@ class Config:
     # Sequence configuration (from paper)
     SEQUENCE_LENGTH = 8  # 8 previous trading days
     PREDICTION_HORIZON = 1  # Predict next day's close price
+    
+    # Stock embedding configuration
+    STOCK_EMBEDDING_TYPE = 'chronos'  # 'chronos', 'lstm_multihead', or 'patchtst'
+    STOCK_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', f'{STOCK_EMBEDDING_TYPE}_{SEQUENCE_LENGTH}')
     
     # Sentiment features
     SENTIMENT_DIM = 3  # positive, negative, neutral

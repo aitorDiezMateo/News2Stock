@@ -15,19 +15,6 @@ class Config:
     # ========================================================================
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     
-    # Stock embedding type: 'patchtst', 'chronos', 'lstm_multihead'
-    STOCK_EMBEDDING_TYPE = 'chronos'
-    
-    # Input data paths
-    STOCK_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', STOCK_EMBEDDING_TYPE) + os.sep
-    NEWS_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'news', 'embeddings') + os.sep
-    STOCK_DATA_PATH = os.path.join(ROOT_DIR, 'data', 'stocks', 'processed') + os.sep
-    
-    # Output paths
-    MODEL_SAVE_PATH = os.path.join(ROOT_DIR, 'models', 'prediction') + os.sep
-    RESULTS_PATH = os.path.join(ROOT_DIR, 'results', 'prediction') + os.sep
-    PLOTS_PATH = os.path.join(ROOT_DIR, 'plots', 'prediction') + os.sep
-    
     # ========================================================================
     # DATA CONFIGURATION
     # ========================================================================
@@ -45,7 +32,22 @@ class Config:
     TICKERS = list(TICKER_TO_NEWS.keys())
     
     # Window configuration
-    WINDOW_SIZE = 20  # Days in each window
+    WINDOW_SIZE = 5  # Days in each window
+    
+    # Stock embedding type: 'patchtst', 'chronos', 'lstm_multihead'
+    STOCK_EMBEDDING_TYPE = 'chronos'
+    
+    # Stock embeddings path includes window size dynamically
+    STOCK_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', f'{STOCK_EMBEDDING_TYPE}_{WINDOW_SIZE}') + os.sep
+    
+    # Other data paths
+    NEWS_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'news', 'embeddings') + os.sep
+    STOCK_DATA_PATH = os.path.join(ROOT_DIR, 'data', 'stocks', 'processed') + os.sep
+    
+    # Output paths
+    MODEL_SAVE_PATH = os.path.join(ROOT_DIR, 'models', 'prediction') + os.sep
+    RESULTS_PATH = os.path.join(ROOT_DIR, 'results', 'prediction') + os.sep
+    PLOTS_PATH = os.path.join(ROOT_DIR, 'plots', 'prediction') + os.sep
     
     # ========================================================================
     # PREDICTION HORIZON

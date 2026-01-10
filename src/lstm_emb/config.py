@@ -12,7 +12,6 @@ class Config:
     # ========================================================================
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     DATA_PATH_LOAD = os.path.join(ROOT_DIR, 'data', 'stocks', 'processed') + os.sep
-    EMBEDDINGS_SAVE_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', 'lstm_multihead') + os.sep
     RESULTS_PATH = os.path.join(ROOT_DIR, 'results', 'lstm') + os.sep
     
     # ========================================================================
@@ -20,6 +19,9 @@ class Config:
     # ========================================================================
     TICKERS = ['GOOGL', 'AAPL', 'AMZN', 'META', 'MSFT', 'NVDA', 'TSLA']
     SEQUENCE_LENGTH = 20
+    
+    # EMBEDDINGS_SAVE_PATH includes sequence length (window size) dynamically
+    EMBEDDINGS_SAVE_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', f'lstm_multihead_{SEQUENCE_LENGTH}') + os.sep
     
     TARGETS = ['LOG_RETURN', 'ABS_LOG_RETURN', 'VOLATILITY']
     TARGET_WEIGHTS = {

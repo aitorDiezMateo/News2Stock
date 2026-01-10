@@ -14,8 +14,6 @@ class Config:
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     STOCK_DATA_PATH = os.path.join(ROOT_DIR, 'data', 'stocks', 'processed')
     NEWS_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'news', 'embeddings')
-    TIMESERIES_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', 'chronos')
-    RESULTS_PATH = os.path.join(ROOT_DIR, 'results', 'comprehensive_classification')
     
     # Tickers
     TICKER_TO_NEWS = {
@@ -33,6 +31,12 @@ class Config:
     # Sequence configuration
     SEQUENCE_LENGTH = 20
     PREDICTION_HORIZON = 1
+    
+    # Time series embedding configuration
+    TIMESERIES_EMBEDDING_TYPE = 'chronos'  # 'chronos', 'lstm_multihead', or 'patchtst'
+    TIMESERIES_EMBEDDINGS_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', f'{TIMESERIES_EMBEDDING_TYPE}_{SEQUENCE_LENGTH}')
+    
+    RESULTS_PATH = os.path.join(ROOT_DIR, 'results', 'comprehensive_classification')
     
     # Classification thresholds
     NEUTRAL_THRESHOLD = 0.005  # ±0.5% = neutral

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-02T10:50:51.438728",
+  "timestamp": "2026-01-10T12:04:32.522808",
   "tickers": [
     "AAPL",
     "AMZN",
@@ -10,25 +10,25 @@
     "TSLA"
   ],
   "training_mode": "unified",
-  "num_samples": 17234,
-  "train_samples": 12063,
-  "val_samples": 2585,
-  "test_samples": 2586,
-  "input_dim": 1543,
+  "num_samples": 17339,
+  "train_samples": 12137,
+  "val_samples": 2601,
+  "test_samples": 2601,
+  "input_dim": 1557,
   "hidden_dims": [
     512,
     256,
     128,
     64
   ],
-  "num_epochs_trained": 39,
-  "best_val_loss": 1.0912029332764144,
-  "best_val_acc": 0.4332688588007737,
-  "test_accuracy": 0.3723897911832947,
-  "test_f1_macro": 0.3568512940009825,
+  "num_epochs_trained": 24,
+  "best_val_loss": 1.0931775779368464,
+  "best_val_acc": 0.37293348712033836,
+  "test_accuracy": 0.38946559015763166,
+  "test_f1_macro": 0.37702640684839483,
   "class_weights": [
-    1.3484238386154175,
-    0.7548338174819946,
-    1.0711241960525513
+    1.3431828022003174,
+    0.7578993439674377,
+    1.0683039426803589
   ]
 }

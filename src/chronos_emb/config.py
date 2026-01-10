@@ -12,7 +12,6 @@ class Config:
     # ========================================================================
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     DATA_PATH_LOAD = os.path.join(ROOT_DIR, 'data', 'stocks', 'processed') + os.sep
-    EMBEDDINGS_SAVE_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', 'chronos') + os.sep
     
     # ========================================================================
     # DATA
@@ -21,6 +20,9 @@ class Config:
     TARGET_COL = 'LOG_RETURN'
     WINDOW_SIZE = 20
     STRIDE = 1
+    
+    # EMBEDDINGS_SAVE_PATH includes window size dynamically
+    EMBEDDINGS_SAVE_PATH = os.path.join(ROOT_DIR, 'data', 'embeddings', f'chronos_{WINDOW_SIZE}') + os.sep
     
     # ========================================================================
     # MODEL
