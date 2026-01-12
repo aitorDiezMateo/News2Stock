@@ -1,7 +1,0 @@
-Job ID: 3824686
-Running on node: hyperion-118.sw.ehu.es
-Starting time: Thu Nov 27 16:26:07 CET 2025
-GPU assigned: 0
-Working directory: /scratch/aitordiez/News2Stock/summaries/transformer_fasttext
-Starting Transformer FastText training...
-Training failed!

@@ -19,7 +19,7 @@ mkdir -p checkpoints
 # Activate virtual environment
 module load Miniforge3
 eval "$(conda shell.bash hook)"
-conda activate /scratch/aitordiez/conda-env/pegasus_env  # Adjust to your env name
+conda activate /scratch/aitordiez/conda-env/nlp_env  # Adjust to your env name
 
 # Print some useful information
 echo "Job ID: $SLURM_JOB_ID"

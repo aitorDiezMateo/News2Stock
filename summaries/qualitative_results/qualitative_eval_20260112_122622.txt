@@ -1,0 +1,281 @@
+====================================================================================================
+ARTICLE #1
+====================================================================================================
+
+📰 ORIGINAL TEXT:
+----------------------------------------------------------------------------------------------------
+It's not customary for a corporation to give a man a job after he sues the firm for millions of
+dollars. One analyst thinks Apple Inc. (NASDAQ: AAPL ) should ignore conventions and do it anyway.
+"This guy is just like you and me," Global Equities Research analyst Trip Chowdhry told Benzinga.
+"He's just an individual person who's only passionate about innovating." Chowdhry is referring to
+Patrick Racz, founder of Smartflash, the company that sued Apple. Racz owns the patents that were
+allegedly infringed by iTunes. A federal jury ordered Apple to pay $532.9 million in damages. "If
+you look at the patents this guy has, you have to appreciate the person's inventiveness," said
+Chowdhry. "[Apple is] being very arrogant." Instead of acknowledging the man's patents, Chowdhry
+believes that Apple has put the power (of its entire $700 billion company) behind a legal defense
+that attacked the patent holder. "It's an army of $700 billion who is going against one innovative
+individual," said Chowdhry, who urged investors to read Racz's patents. "And they copied this
+technology!" Related Link: How Apple Could Add $100 Billion To Its Market Cap Everybody's Offended
+By Patent Theft…Until They're Sued Chowdhry is appalled at Apple's reaction to Racz's lawsuit. He
+said that Apple isn't too happy when it believes a firm is infringing on one of its patents, but it
+doesn't seem to care about the patents of others. "Don't you think this individual has valid
+concerns that his idea has been copied by no other than the world's largest company?" Chowdhry
+questioned, reiterating his disdain for Apple's arrogance in this scenario. He said Apple should
+"maybe give him a job." "This is a guy who should be the CTO, Chief Technology Officer, of Apple,"
+said Chowdhry. "This guy fits the profile of a very smart engineer and the right approach would have
+been, hire this guy to run the innovation group." It should be noted that Chowdhry is extremely
+bullish on the iPhone maker's future. Last year he declared that innovation is back at Apple.
+"[Apple] copied this person's patent and his ideas and then put an army of $700 billion behind this
+one individual," said Chowdhry. "The right approach should have been, as I mentioned -- acknowledge,
+appreciate and probably hire this guy." Disclosure: At the time of this writing, Louis Bedigian had
+no position in the equities mentioned in this report. Image credit: KelvinSong , Wikimedia
+
+
+✅ REFERENCE SUMMARY (Ground Truth):
+----------------------------------------------------------------------------------------------------
+Trip Chowdhry says firm is being arrogant in response to lawsuit. He says Apple should have hired
+Racz as its chief technology officer. "It's an army of $700 billion who are going against one
+innovative individual" Trip Chowdhry says Apple should have hired Steve Jobs sooner. Apple has been
+slow to acknowledge the importance of SteveJobs, says Chowdhury, who is now at t he University of
+California
+
+
+🤖 GENERATED SUMMARIES BY MODEL:
+====================================================================================================
+
+🥇 Pointer-Generator + FastText [RNN] - Rank #1
+----------------------------------------------------------------------------------------------------
+trip chowdhry says apple s pay the 9 million in damages apple s put the power of its entire billion
+billion in damages in the chowdhry says apple is a very a of the patents apple s apple s apple s
+apple s apple s apple and apple and apple and and in the s s s s s
+
+🥈 Transformer + FastText [Transformer] - Rank #2
+----------------------------------------------------------------------------------------------------
+among top gainers. among top 10 holdings in the s&p 500 in recent weeks: . is a etf that seeks to
+replicate the performance of the s&p 500 index. is up more than 20% this year, making it one of the
+best-performing stocks in the s&p 500
+
+🥉 Simple Seq2Seq + FastText [RNN] - Rank #3
+----------------------------------------------------------------------------------------------------
+trip chowdhry says apple is a a a apple apple s apple is a a a of the a <UNK> says he says the s is
+a a the of the the the the the the the the the the the the the the the the the the the the the the
+the the the the the the the world s
+
+4️⃣ Pointer-Generator [RNN] - Rank #4
+----------------------------------------------------------------------------------------------------
+apple chowdhry says apple is put very of of the man says apple is put very arrogant says says says s
+chowdhry says apple s put chowdhry says apple is a to to says he says he says he is a to to says he
+says he says he says to be a says he says
+
+5️⃣ Simple Seq2Seq [RNN] - Rank #5
+----------------------------------------------------------------------------------------------------
+trip chowdhry says he is a a <UNK> of the <UNK> chowdhry says he is a a <UNK> of the company s
+chowdhry says chowdhry s <UNK> chowdhry says he s a <UNK> says he is a a a of the company s <UNK>
+says he is a a to the company s a <UNK> of the company s
+
+6️⃣ Transformer [Transformer] - Rank #6
+----------------------------------------------------------------------------------------------------
+says it will cut up to 5,000 jobs as part of cost-cutting to on youtube: facebook: twitter:
+instagram:
+
+
+📊 SUMMARY STATISTICS:
+----------------------------------------------------------------------------------------------------
+Reference:      67 words,  400 chars
+Pointer Generator Fasttext  59 words,  263 chars
+Transformer Fasttext       47 words,  235 chars
+Simple Seq2Seq Fasttext    61 words,  234 chars
+Pointer Generator          56 words,  242 chars
+Simple Seq2Seq             59 words,  249 chars
+Transformer                18 words,  102 chars
+
+
+
+====================================================================================================
+ARTICLE #2
+====================================================================================================
+
+📰 ORIGINAL TEXT:
+----------------------------------------------------------------------------------------------------
+After years of speculation about which company would hit the elusive $1 trillion market cap first,
+Apple, Inc. (NASDAQ: AAPL ) became the first U.S. company to reach the historic milestone on
+Thursday. But while Apple investors are now neft to wonder where the stock will head from here,
+DataTrek Research's Jessica Rabe came up with a list of six things all investors should learn from
+Apple’s meteoric rise to $1 trillion. 1. Companies can be more powerful than governments. Rabe said
+Apple is an american company that produces its products in China, and its relationship with both
+nations is so important that it has avoided the crosshairs of the international trade war. “While
+this political hedge was clearly an accident of history, it works well today,” Rabe said. 2.
+Hardware isn’t dead. For years, Silicon Valley investors have been focusing on the latest software
+trends, but the vast majority of Apple’s revenue still comes from its devices. “Software may eat the
+world, as Marc Andreessen famously said 7 years ago, but it still needs hardware,” Rabe said. 3.
+Value stocks can still grow. It’s been a difficult decade for value investors, but Apple became the
+first to hit $1 trillion and it didn’t need a 20 times PE ratio to do so. “It would be logical, but
+wrong, to think a huge valuation must stem from a sky-high PE ratio,” Rabe said. 4. Innovative
+genius is not required. There’s no question Apple wouldn't be where it is today without Steve Jobs,
+but Apple’s current management team were able to pick up where jobs left off. “The team he put in
+place was able to find new ways to leverage it without his direct guidance,” Rabe said. 5. Data
+privacy and security are valuable. Apple has mostly avoided the privacy and security concerns
+weighing on its FANG brethren in 2018, and it likely never would have made it to $1 trillion this
+quickly otherwise. “Respecting data privacy and security helps equity valuations,” Rabe said. 6.
+Premium products and brands count. Much of the success in the tech world in the past decade has come
+from companies disrupting markets from the low end of the market, but Apple’s products demonstrate
+that consumers are willing to pay more for high-quality products. “If smartphone unit counts drove
+market cap, Samsung would be getting ready to ring the $1 trillion bell instead of Apple,” Rabe
+said. For now, Apple investors can celebrate the company’s historic achievement. However, the six
+points above may come in useful to investors who want to identify the next group of $1-trillion
+companies. Related Link: Wall Street Weighs In On Apple's Q3 Earnings Beat: Buybacks, Services,
+iPhone Demand In Focus
+
+
+✅ REFERENCE SUMMARY (Ground Truth):
+----------------------------------------------------------------------------------------------------
+DataTrek’s Jessica Rabe offers a list of six things investors should know. Apple is the first U.S.
+company to hit $1 trillion in market cap: BofA-Merrill Apple’s $1 trillion market cap shows
+consumers are willing to pay. ‘If smartphone unit counts drove marketcap, Samsung would be getting
+ready,’ Rabe said.’..s next big challenge will be to keep pace with demand
+
+
+🤖 GENERATED SUMMARIES BY MODEL:
+====================================================================================================
+
+🥇 Pointer-Generator + FastText [RNN] - Rank #1
+----------------------------------------------------------------------------------------------------
+apple s an american company company to reach the historic 1 six market apple s an american company
+that produces its products in the and rabe says rabe says rabe says apple s to to to the rabe says
+rabe says apple s to to to the s s s s s s s s s s s
+
+🥈 Transformer + FastText [Transformer] - Rank #2
+----------------------------------------------------------------------------------------------------
+china u.s. trade u.s. trade u.s. trade all have new all set to report earnings after market close
+
+🥉 Simple Seq2Seq + FastText [RNN] - Rank #3
+----------------------------------------------------------------------------------------------------
+the s is a to a to a to of the apple s apple s apple is a to a to the in the s s says s s s a to of
+the the s p 500 is a to a to the the says it s not a good time to get a to the says
+
+4️⃣ Pointer-Generator [RNN] - Rank #4
+----------------------------------------------------------------------------------------------------
+apple s an american company s apple s reach apple s jessica rabe is a american company s rabe s rabe
+s rabe s rabe is a to to the apple s apple amazon and and are among the top 10 in the s s s s s s s
+s to the s s s s to the s s s a look at some of the best performing stocks in the world
+
+5️⃣ Simple Seq2Seq [RNN] - Rank #5
+----------------------------------------------------------------------------------------------------
+apple s apple to be first than apple trillion apple s apple is the world s most valuable company s
+to s s s s is apple s apple s apple to be apple s apple s apple s apple to be a apple s apple s is a
+to the apple s
+
+6️⃣ Transformer [Transformer] - Rank #6
+----------------------------------------------------------------------------------------------------
+tesla to unveil new model 3 in los angeles on thursday. analysts expect the company to report
+better-than-expected earnings on but some say it’s too early to say whether it will be a long-term
+
+
+📊 SUMMARY STATISTICS:
+----------------------------------------------------------------------------------------------------
+Reference:      60 words,  364 chars
+Pointer Generator Fasttext  58 words,  250 chars
+Transformer Fasttext       18 words,   97 chars
+Simple Seq2Seq Fasttext    58 words,  183 chars
+Pointer Generator          74 words,  288 chars
+Simple Seq2Seq             53 words,  214 chars
+Transformer                34 words,  192 chars
+
+
+
+====================================================================================================
+ARTICLE #3
+====================================================================================================
+
+📰 ORIGINAL TEXT:
+----------------------------------------------------------------------------------------------------
+Some of the stocks that may grab investor focus today are: Wall Street expects Walmart Inc (NYSE:
+WMT ) to report quarterly earnings at $1.44 per share on revenue of $142.64 billion before the
+opening bell. Walmart shares rose 1% to $119.01 in after-hours trading. Apple Inc. (NASDAQ: AAPL )
+said that it doesn't expect to meet the revenue guidance for the quarter ending in March, as both
+its supply chain and the demand for its products is impacted by the coronavirus outbreak. Apple
+shares fell 3.6% to $313.16 in the pre-market trading session. Analysts expect Agilent Technologies,
+Inc. (NYSE: A ) to post quarterly earnings at $0.81 per share on revenue of $1.35 billion after the
+closing bell. Agilent shares fell 0.1% to $85.75 in after-hours trading. Before the opening bell,
+Medtronic PLC (NYSE: MDT ) is projected to report quarterly earnings at $1.38 per share on revenue
+of $7.81 billion. Medtronic shares gained 1.5% to $119.10 in after-hours trading. Forward
+Industries, Inc. (NASDAQ: FORD ) reported a narrower loss for its first quarter. The company’s loss
+shrank to $0.01 in the first quarter, versus a year-ago loss of $0.06 per share. Its sales declined
+to $8.4 million from $10.183 million. Forward Industries shares gained 5.3% to $1.20 in the after-
+hours trading session. Find out what's going on in today's market and bring any questions you have
+to Benzinga's PreMarket Prep . Choosing the best broker is an important part of being a successful
+trader or investor Analysts are expecting Advance Auto Parts, Inc. (NYSE: AAP ) to have earned $1.36
+per share on revenue of $2.12 billion in the latest quarter. Advance Auto Parts will release
+earnings before the markets open. Advance Auto Parts shares gained 0.1% to $133.75 in after-hours
+trading. After the markets close, Herbalife Nutrition Ltd (NYSE: HLF ) is estimated to post
+quarterly earnings at $0.63 per share on revenue of $1.22 billion. Herbalife shares slipped 0.1% to
+$39.67 in after-hours trading. Air Lease Corp (NYSE: AL ) reported upbeat results for its fourth
+quarter on Friday. Air Lease shares rose 0.1% to $45.35 in the after-hours trading session. Wall
+Street expects Groupon Inc (NASDAQ: GRPN ) to post quarterly earnings at $0.15 per share on revenue
+of $709.35 million after the closing bell. Groupon shares rose 0.7% to $2.85 in after-hours trading.
+
+
+✅ REFERENCE SUMMARY (Ground Truth):
+----------------------------------------------------------------------------------------------------
+Wall Street expects Walmart to report quarterly earnings at $1.44 per share on revenue of $142.64
+billion. Agilent, Medtronic, Forward Industries, Advance Auto Parts are among the day’s gainers.
+Wall Street expects Groupon to post earnings of $0.15 per share. Air Lease, Groupon both reported
+upbeat results in after-hours trading session on Friday. to see if it can sustain momentum
+
+
+🤖 GENERATED SUMMARIES BY MODEL:
+====================================================================================================
+
+🥇 Pointer-Generator + FastText [RNN] - Rank #1
+----------------------------------------------------------------------------------------------------
+wall street expects walmart technologies report report earnings earnings earnings on the advance
+bell on the of the 64 billion share on revenue of 142 35 billion share price revenue of 142 64
+billion share price revenue of 142 64 billion share price revenue of 2 64 billion share price
+revenue of 2 64 billion share price revenue of 2 64 billion share price revenue of 2 64 billion
+share price revenue of 2 64 billion share price revenue of 2 64 billion share price revenue of 2 64
+billion share price revenue of 2 64 billion share
+
+🥈 Transformer + FastText [Transformer] - Rank #2
+----------------------------------------------------------------------------------------------------
+dan nathan says he would buy
+
+🥉 Simple Seq2Seq + FastText [RNN] - Rank #3
+----------------------------------------------------------------------------------------------------
+analysts are expecting to to report earnings of 1 per share on revenue of 1 billion billion analysts
+expect expecting to to report to report earnings of 1 1 billion in the opening bell analysts expect
+expecting to to to to to to to in the in the hours trading on wednesday
+
+4️⃣ Pointer-Generator [RNN] - Rank #4
+----------------------------------------------------------------------------------------------------
+wall street expects walmart walmart to report quarterly earnings at 1 81 per share on revenue of
+revenue of 1 64 billion revenue of 1 64 billion revenue of 1 64 billion revenue of 1 64 billion
+revenue of 1 7 billion in revenue of 1 7 billion in revenue of 1 billion billion in revenue of 1
+billion billion in shares of the 3 to to 1 billion in after hours trading on the to to to to to to
+to
+
+5️⃣ Simple Seq2Seq [RNN] - Rank #5
+----------------------------------------------------------------------------------------------------
+analysts are expecting ford to report stronger than expected results for its second quarter analysts
+expect expecting to to report stronger than expected results for its second quarter analysts expect
+expecting to to post stronger than expected results for its second quarter analysts expect expecting
+to to post stronger than expected results for its second quarter analysts expect expecting to to
+post stronger than expected results
+
+6️⃣ Transformer [Transformer] - Rank #6
+----------------------------------------------------------------------------------------------------
+says he is not a fan of the company, but will fight for says he is not a fan of the company, but he
+is not a fan of
+
+
+📊 SUMMARY STATISTICS:
+----------------------------------------------------------------------------------------------------
+Reference:      60 words,  383 chars
+Pointer Generator Fasttext  98 words,  531 chars
+Transformer Fasttext        6 words,   28 chars
+Simple Seq2Seq Fasttext    52 words,  272 chars
+Pointer Generator          82 words,  391 chars
+Simple Seq2Seq             66 words,  434 chars
+Transformer                29 words,  115 chars
+
+
+
